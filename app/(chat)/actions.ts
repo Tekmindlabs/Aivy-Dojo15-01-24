@@ -22,13 +22,9 @@ export async function generateTitleFromUserMessage({
   message: CoreUserMessage;
 }) {
   const { text: title } = await generateText({
-    model: customModel('gpt-4o-mini'),
-    system: `\n
-    - you will generate a short title based on the first message a user begins a conversation with
-    - ensure it is not more than 80 characters long
-    - the title should be a summary of the user's message
-    - do not use quotes or colons`,
-    prompt: JSON.stringify(message),
+    model: customModel('gemini-pro'),
+    // Remove the system prompt and include the instructions in the prompt itself
+    prompt: `Generate a short title (no more than 80 characters) based on this message. The title should be a summary of the message. Do not use quotes or colons. Here's the message: ${JSON.stringify(message)}`,
   });
 
   return title;
